@@ -34,11 +34,10 @@ export default function Home() {
     try {
       const provider = await getProviderOrSigner();
       const nftContract = new Contract(
-        NFT_CONTRACT_ABI,
         NFT_CONTRACT_ADDRESS,
+        NFT_CONTRACT_ABI,
         provider
       );
-
       const tokenContract = new Contract(
         TOKEN_CONTRACT_ADDRESS,
         TOKEN_CONTRACT_ABI,
@@ -46,7 +45,9 @@ export default function Home() {
       );
 
       const signer = await getProviderOrSigner(true);
+
       const address = await signer.getAddress();
+
       const balance = await nftContract.balanceOf(address);
 
       if (balance === zero) {
@@ -73,8 +74,8 @@ export default function Home() {
     try {
       const provider = await getProviderOrSigner();
       const tokenContract = new Contract(
-        TOKEN_CONTRACT_ABI,
         TOKEN_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ABI,
         provider
       );
 
@@ -91,9 +92,10 @@ export default function Home() {
   const mintCryptoDevToken = async (amount) => {
     try {
       const signer = await getProviderOrSigner(true);
+
       const tokenContract = new Contract(
-        TOKEN_CONTRACT_ABI,
         TOKEN_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ABI,
         signer
       );
 
@@ -106,7 +108,7 @@ export default function Home() {
       setLoading(true);
       await tx.wait();
       setLoading(false);
-      window.alert("Successfully minted Crypto Dev Token");
+      window.alert("Sucessfully minted Crypto Dev Tokens");
       await getBalanceOfCryptoDevTokens();
       await getTotalTokensMinted();
       await getTokensToBeClaimed();
@@ -119,8 +121,8 @@ export default function Home() {
     try {
       const signer = await getProviderOrSigner(true);
       const tokenContract = new Contract(
-        TOKEN_CONTRACT_ABI,
         TOKEN_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ABI,
         signer
       );
 
@@ -128,7 +130,7 @@ export default function Home() {
       setLoading(true);
       await tx.wait();
       setLoading(false);
-      window.alert("Successfully claimed Crypto Dev Tokens");
+      window.alert("Sucessfully claimed Crypto Dev Tokens");
       await getBalanceOfCryptoDevTokens();
       await getTotalTokensMinted();
       await getTokensToBeClaimed();
@@ -141,8 +143,8 @@ export default function Home() {
     try {
       const provider = await getProviderOrSigner();
       const tokenContract = new Contract(
-        TOKEN_CONTRACT_ABI,
         TOKEN_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ABI,
         provider
       );
 
@@ -210,13 +212,13 @@ export default function Home() {
           <div className={styles.description}>
             {tokensToBeClaimed * 10} Tokens can be claimed!
           </div>
-
           <button className={styles.button} onClick={claimCryptoDevTokens}>
             Claim Tokens
           </button>
         </div>
       );
     }
+
     return (
       <div style={{ display: "flex-col" }}>
         <div>
@@ -224,12 +226,13 @@ export default function Home() {
             type="number"
             placeholder="Amount of Tokens"
             onChange={(e) => setTokenAmount(BigNumber.from(e.target.value))}
+            className={styles.input}
           />
         </div>
 
         <button
           className={styles.button}
-          disable={!(tokenAmount > 0)}
+          disabled={!(tokenAmount > 0)}
           onClick={() => mintCryptoDevToken(tokenAmount)}
         >
           Mint Tokens
